@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Staff Directory</title>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+    integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <header>
+    <h1>Staff Directory</h1>
+  </header>
+  <div class="center">
+    <form name="addStaffForm" action="" class="add-staff-form" onsubmit="return validateForm()">
+      <label for="first-name" class="add-staff-label">First name:</label>
+      <input name="first" type="text" id="first" class="add-staff-input" placeholder="John" />
+      <label for="last-name" class="add-staff-label">Last name:</label>
+      <input name="last" type="text" id="last" class="add-staff-input" placeholder="Smith" />
+      <label for="position" class="add-staff-label">Position:</label>
+      <select name="position" id="position" class="add-staff-select">
+        <option name="position" disabled selected value>
+          -- select an option --
+        </option>
+        <option value="manager">Manager</option>
+        <option value="employee">Employee</option>
+      </select>
+      <input type="submit" value="Add Staff" class="green-to-white-btn" />
+    </form>
+    <button class="sort-btn">
+      <i class="fas fa-sort-alpha-down"></i>
+    </button>
+  </div>
+
+  <div class="staff"></div>
+
+  <script src="src/index.js"></script>
+</body>
+
+</html>
