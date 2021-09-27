@@ -1,5 +1,3 @@
-import "./styles.css";
-
 // data structure - an array of objects - for staff
 const staff = [
   {
