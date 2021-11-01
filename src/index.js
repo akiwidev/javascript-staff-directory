@@ -1,16 +1,5 @@
 // data structure - an array of objects - for staff
-const staff = [
-  {
-    firstName: "grace",
-    lastName: "kelly",
-    position: "manager"
-  },
-  {
-    firstName: "brad",
-    lastName: "pitt",
-    position: "employee"
-  }
-];
+const staff = JSON.parse(localStorage.getItem('staff')) || [];
 
 // helper functions
 const capitalizeFirstLetter = (string) => {
@@ -97,9 +86,10 @@ const updateStaffDetails = (event) => {
     "afterbegin",
     `<h1 class="full-name">${capitalizeFirstLetter(
       newFirst
-    )} ${capitalizeFirstLetter(newLast)}</h1>
+      )} ${capitalizeFirstLetter(newLast)}</h1>
       <p class="role">${capitalizeFirstLetter(newRole)}</p>`
-  );
+      );
+  localStorage.setItem('staff', JSON.stringify(staff));
   document.querySelector(".edit-form").remove();
 };
 
@@ -116,8 +106,8 @@ const validateForm = () => {
   }
 };
 
-const displayStaff = () => {
-  staff.forEach((staff) => insertStaff(staff));
+const displayStaff = (staff) => {
+    staff.forEach((staff) => insertStaff(staff));
 };
 
 const addStaffMember = (event) => {
@@ -130,6 +120,7 @@ const addStaffMember = (event) => {
     const newStaff = { firstName: first, lastName: last, position: pos };
     staff.push(newStaff);
     insertStaff(newStaff);
+    localStorage.setItem('staff', JSON.stringify(staff));
     document.querySelector(".add-staff-form").reset();
     addEditAndDeleteEventListeners();
   }
@@ -140,10 +131,13 @@ const deleteStaffMember = (event) => {
   const fullName = event.currentTarget.parentElement.parentElement.querySelector(
     ".full-name"
   ).innerText;
-  const index = getStaffMemberIndex(event);
+  const first = fullName.split(" ")[0].toLowerCase();
+  const last = fullName.split(" ")[1].toLowerCase();
+  const index = getStaffMemberIndex(first, last);
   const result = window.confirm(`Really delete ${fullName}?`);
   if (result) {
     staff.splice(index, 1);
+    localStorage.setItem('staff', JSON.stringify(staff));
     event.currentTarget.parentElement.parentElement.remove();
   }
 };
@@ -151,16 +145,16 @@ const deleteStaffMember = (event) => {
 const editStaffMember = (event) => {
   event.preventDefault();
   const collapsibleFormHTML = `<form action="#" class="edit-form">
-                                <label for="update-first-name" class="edit-label">New first name: </label>
-                                <input type="text" id="new-first" class="edit-input" /><br />
-                                <label for="update-last-name" class="edit-label">New last name: </label>
-                                <input type="text" id="new-last" class="edit-input"/><br />
-                                <label for="update-position" class="edit-label">Role: </label>
-                                <input type="radio" name="role" value="employee"/> Employee
-                                <input type="radio" name="role" value="manager" /> Manager<br />
-                                <input type="submit" value="Update" id="update" class="white-to-green-btn" />
-                                <input type="submit" value="Close" id="close" class="white-to-green-btn" />
-                              </form>`;
+    <label for="update-first-name" class="edit-label">New first name: </label>
+    <input type="text" id="new-first" class="edit-input" /><br />
+    <label for="update-last-name" class="edit-label">New last name: </label>
+    <input type="text" id="new-last" class="edit-input"/><br />
+    <label for="update-position" class="edit-label">Role: </label>
+    <input type="radio" name="role" value="employee"/> Employee
+    <input type="radio" name="role" value="manager" /> Manager<br />
+    <input type="submit" value="Update" id="update" class="white-to-green-btn" />
+    <input type="submit" value="Close" id="close" class="white-to-green-btn" />
+  </form>`;
   event.currentTarget.parentElement.insertAdjacentHTML(
     "afterend",
     collapsibleFormHTML
@@ -186,7 +180,7 @@ const sortStaffMembers = () => {
 
 // event listeners
 const staffList = document.querySelector(".staff");
-displayStaff();
+displayStaff(staff);
 
 const addStaff = document.querySelector(".green-to-white-btn");
 addStaff.addEventListener("click", addStaffMember);
