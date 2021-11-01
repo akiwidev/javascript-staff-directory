@@ -174,7 +174,8 @@ const sortStaffMembers = () => {
     a.firstName > b.firstName ? 1 : b.firstName > a.firstName ? -1 : 0
   );
   staffList.innerHTML = "";
-  displayStaff();
+  displayStaff(staff);
+  localStorage.setItem('staff', JSON.stringify(staff));
   addEditAndDeleteEventListeners();
 };
 
